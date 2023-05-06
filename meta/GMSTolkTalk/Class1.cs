@@ -259,7 +259,7 @@ namespace GMSTolkTalk
                 {
                     while (synth.State != SynthesizerState.Ready)
                     {
-                        int d = 0;
+                        int d = 0;//Delay.
                     }
                     // Create a new SpeechSynthesizer object
 

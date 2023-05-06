@@ -50,6 +50,7 @@
         {"externalName":"","kind":4,"help":"","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"TolkSilence","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[
         {"TargetMask":6,"resourceVersion":"1.0","name":"GMSTolkTalk.dll","tags":[],"resourceType":"GMProxyFile",},
+        {"TargetMask":6,"resourceVersion":"1.0","name":"GMSTolkTalk_x86.dll","tags":[],"resourceType":"GMProxyFile",},
       ],"copyToTargets":-1,"order":[
         {"name":"TolkTest","path":"extensions/GMSTolkTalk/GMSTolkTalk.yy",},
         {"name":"TolkDebugSet","path":"extensions/GMSTolkTalk/GMSTolkTalk.yy",},
@@ -95,7 +96,7 @@
   "tvosThirdPartyFrameworkEntries": [],
   "IncludedResources": [],
   "androidPermissions": [],
-  "copyToTargets": -1,
+  "copyToTargets": 3035461389054378222,
   "iosCocoaPods": "",
   "tvosCocoaPods": "",
   "iosCocoaPodDependencies": "",

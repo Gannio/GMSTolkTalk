@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -49,6 +49,46 @@
     <DllExportPreProcType>0</DllExportPreProcType>
     <DllExportPostProcType>0</DllExportPostProcType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WIN64;X64</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;WIN64;X64</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WIN32;X86</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;WIN32;X86</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,6 +113,12 @@
     <None Include="Tolk.lib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="x86\Tolk.exp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="x86\Tolk.lib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="nvdaControllerClient64.dll">
@@ -82,6 +128,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tolk.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\dolapi32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\nvdaControllerClient32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SAAPI32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\Tolk.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -111,9 +169,26 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy "%25cd%25\GMSTolkTalk.dll" "%25cd%25\..\..\..\..\datafiles"
-copy "%25cd%25\nvdaControllerClient64.dll" "%25cd%25\..\..\..\..\datafiles"
-copy "%25cd%25\SAAPI64.dll" "%25cd%25\..\..\..\..\datafiles"
-copy "%25cd%25\Tolk.dll" "%25cd%25\..\..\..\..\datafiles"</PostBuildEvent>
+    <PostBuildEvent>set "dllName=GMSTolkTalk.dll"
+set "dllName32=GMSTolkTalk_x86.dll"
+if $(PlatformName) == x86 (
+    del "%25dllName32%25"
+    ren "%25dllName%25" "%25dllName32%25"
+    echo Renamed "%25dllName%25" to "%25dllName32%25"
+mkdir %25cd%25\..\..\..\..\..\datafiles\x86
+copy "%25cd%25\GMSTolkTalk_x86.dll" "%25cd%25\..\..\..\..\..\extensions\gmstolktalk"
+copy "%25cd%25\x86\nvdaControllerClient32.dll" "%25cd%25\..\..\..\..\..\datafiles\x86\nvdaControllerClient32.dll"
+copy "%25cd%25\x86\SAAPI32.dll" "%25cd%25\..\..\..\..\..\datafiles\x86\SAAPI32.dll"
+copy "%25cd%25\x86\Tolk.dll" "%25cd%25\..\..\..\..\..\datafiles\x86\Tolk.dll"
+
+) else (
+echo $(PlatformName)
+echo 64-bit
+copy "%25cd%25\GMSTolkTalk.dll" "%25cd%25\..\..\..\..\..\extensions\gmstolktalk"
+copy "%25cd%25\nvdaControllerClient64.dll" "%25cd%25\..\..\..\..\..\datafiles"
+copy "%25cd%25\SAAPI64.dll" "%25cd%25\..\..\..\..\..\datafiles"
+copy "%25cd%25\Tolk.dll" "%25cd%25\..\..\..\..\..\datafiles"
+)
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
