@@ -1,6 +1,7 @@
 TolkDebugSet(1);
 TolkTrySAPI(1);
 TolkPreferSAPI(0);
+TolkFallbackSet(1);
 TolkPowerOn();
 TolkOutput("Hello World!");
 

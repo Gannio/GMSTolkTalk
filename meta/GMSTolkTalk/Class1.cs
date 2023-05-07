@@ -14,12 +14,14 @@ namespace GMSTolkTalk
     public class Class1
     {
         static bool debugEnabled = false;
+        static bool SpeechSynthFallback = true;
         static SpeechSynthesizer synth = new SpeechSynthesizer();
+        static Task synthLastTask = null;
         const string notLoadedText = "Tolk is not yet loaded!";
         const int OUTPUTTYPE_SPEECH = 0;
         const int OUTPUTTYPE_BRAILLE = 1;
         const int OUTPUTTYPE_BOTH = 2;
-
+        
 
         private static void DebugPrint(string content)
         {
@@ -33,6 +35,15 @@ namespace GMSTolkTalk
             }
         }
 
+
+        [DllExport("TolkFallbackSet", CallingConvention.Cdecl)]
+        public static unsafe double TolkFallbackSet(double value)
+        {
+            DebugPrint("TolkFallbackSet called");
+            //Doesn't need a load check, since it's just shifting a boolean.
+            SpeechSynthFallback = value > 0;
+            return 0;
+        }
         [DllExport("TolkDebugSet", CallingConvention.Cdecl)]
         public static unsafe double TolkDebugSet(double value)
         {
@@ -114,17 +125,27 @@ namespace GMSTolkTalk
                 DebugPrint(notLoadedText);
                 return ToGMSString("NOT LOADED");
             }
+            return ToGMSString(GetScreenReader());
+        }
+
+        private static string GetScreenReader()
+        {
             string name = Tolk.DetectScreenReader();
             if (name != null)
             {
                 DebugPrint("The active screen reader driver is: " + name);
-                return ToGMSString(name);
+                return name;
             }
             else
             {
                 DebugPrint("None of the Tolk-supported screen readers are running. Will use fallback of System Speech Synthesis for speech.");
                 // Create a new SpeechSynthesizer object
-                return ToGMSString("null");
+                if (SpeechSynthFallback)
+                {
+                    return "fallback";
+                }
+                
+                return "null";
 
             }
         }
@@ -148,6 +169,8 @@ namespace GMSTolkTalk
                 DebugPrint("This screen reader driver does not support speech.");
                 return 0;
             }
+
+            //synth.State == SynthesizerState.Ready
         }
 
         [DllExport("TolkHasBraille", CallingConvention.Cdecl)]
@@ -179,15 +202,28 @@ namespace GMSTolkTalk
                 DebugPrint(notLoadedText);
                 return 0;
             }
-            if (Tolk.IsSpeaking())
+            if (!SpeechSynthFallback && GetScreenReader() == "fallback")
             {
-                DebugPrint("This screen reader driver is speaking.");
-                return 1;
+                if (synth.State != SynthesizerState.Ready)
+                {
+                    DebugPrint("Fallback is speaking.");
+                    return 1.0;
+                }
+                DebugPrint("Fallback is not speaking.");
+                return 0.0;
             }
             else
             {
-                DebugPrint("This screen reader driver is not speaking.");
-                return 0;
+                if (Tolk.IsSpeaking())
+                {
+                    DebugPrint("This screen reader driver is speaking.");
+                    return 1;
+                }
+                else
+                {
+                    DebugPrint("This screen reader driver is not speaking.");
+                    return 0;
+                }
             }
         }
 
@@ -254,22 +290,39 @@ namespace GMSTolkTalk
             }
             else
             {
-                DebugPrint("None of the Tolk-supported screen readers are running. Falling back to System Speech Synthesis.");
-                Task.Run(() =>//No easy way to track this, as it runs within this thread (and GMS doesn't have an easy way to call back later).
+                DebugPrint("None of the Tolk-supported screen readers are running.");
+
+                if (SpeechSynthFallback)
                 {
-                    while (synth.State != SynthesizerState.Ready)
+                    DebugPrint("Falling back to basic System Speech Synthesis.");
+
+
+                    var pTask = synthLastTask;//Store the current last task.
+                    var newTask = Task.Run(() =>
                     {
-                        int d = 0;//Delay.
-                    }
-                    // Create a new SpeechSynthesizer object
+                        if (pTask != null)//If the last task when we recorded it wasn't null (we aren't the first task) wait until it's finished to keep going.
+                        Task.WaitAll(pTask);
 
-                    // Set the output device to the default system audio device
-                    synth.SetOutputToDefaultAudioDevice();
+                        while (synth.State != SynthesizerState.Ready)
+                        {
+                            int d = 0;//Delay.
+                        }
+                        // Create a new SpeechSynthesizer object
 
-                    // Speak the desired string
-                    synth.SpeakAsync(info);
-                });
-                return 2;//Use 2 to show we had to fall back, so success is indeterminate.
+                        // Set the output device to the default system audio device
+                        synth.SetOutputToDefaultAudioDevice();
+
+                        // Speak the desired string
+                        synth.SpeakAsync(info);
+                    });
+                    synthLastTask = newTask;//Store ourselves as the new last task in the meantime, so all tasks go in order.
+                    return 2;//Use 2 to show we had to fall back, so success is indeterminate.
+                }
+                else
+                {
+                    DebugPrint("Fallback was disabled. No output will be made.");
+                    return 3;//Use 3 to show a fall back, but fallback was disabled.
+                }
             }
 
             var result = false;
@@ -313,12 +366,22 @@ namespace GMSTolkTalk
                 }
                 else
                 {
-                    DebugPrint("None of the Tolk-supported screen readers are running. Falling back to basic System Speech Synthesis.");
+                    DebugPrint("None of the Tolk-supported screen readers are running.");
 
-                    // Speak the desired string
-                    synth.SpeakAsyncCancelAll();//There's technically just a single cancel, but afaik the Tolk API lacks such a thing, so it probably cancels all at once.
+                    if (SpeechSynthFallback)
+                    {
+                        
+                        DebugPrint("Falling back to basic System Speech Synthesis.");
+                        // Speak the desired string
+                        synth.SpeakAsyncCancelAll();//There's technically just a single cancel, but afaik the Tolk API lacks such a thing, so it probably cancels all at once.
+                        return 2;//Use 2 to show we had to fall back, but it's still a success.
+                    }
+                    else
+                    {
+                        DebugPrint("Fallback was disabled. There is nothing to silence?");
+                        return 3;//Use 3 to show a fallback, but fallback was disabled.
+                    }
                     
-                    return 2;//Use 2 to show we had to fall back, but it's still a success.
                 }
 
 

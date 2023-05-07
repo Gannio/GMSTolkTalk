@@ -3,7 +3,7 @@
   <name>GMS1TolkTalk</name>
   <version>1.0.0</version>
   <packageID></packageID>
-  <ProductID>ACBD3CFF4E539AD869A0E8E3B4B022DD</ProductID>
+  <ProductID></ProductID>
   <date>06/05/23</date>
   <license>Free to use, also for commercial games.</license>
   <description></description>
@@ -184,6 +184,17 @@
           <returnType>2</returnType>
           <argCount>0</argCount>
           <args/>
+        </function>
+        <function>
+          <name>TolkFallbackSet</name>
+          <externalName></externalName>
+          <kind>12</kind>
+          <help></help>
+          <returnType>2</returnType>
+          <argCount>1</argCount>
+          <args>
+            <arg>2</arg>
+          </args>
         </function>
       </functions>
       <constants/>

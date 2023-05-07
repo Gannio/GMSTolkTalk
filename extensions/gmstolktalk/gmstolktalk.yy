@@ -48,6 +48,9 @@
             1,
           ],"resourceVersion":"1.0","name":"TolkOutput","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"","kind":4,"help":"","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"TolkSilence","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"TolkFallbackSet","kind":4,"help":"turnOn","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"TolkFallbackSet","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[
         {"TargetMask":6,"resourceVersion":"1.0","name":"GMSTolkTalk.dll","tags":[],"resourceType":"GMProxyFile",},
         {"TargetMask":6,"resourceVersion":"1.0","name":"GMSTolkTalk_x86.dll","tags":[],"resourceType":"GMProxyFile",},
@@ -66,6 +69,7 @@
         {"name":"TolkBraille","path":"extensions/GMSTolkTalk/GMSTolkTalk.yy",},
         {"name":"TolkOutput","path":"extensions/GMSTolkTalk/GMSTolkTalk.yy",},
         {"name":"TolkSilence","path":"extensions/GMSTolkTalk/GMSTolkTalk.yy",},
+        {"name":"TolkFallbackSet","path":"extensions/GMSTolkTalk/GMSTolkTalk.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",

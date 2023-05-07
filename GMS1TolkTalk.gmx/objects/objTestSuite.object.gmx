@@ -27,15 +27,70 @@
             <kind>1</kind>
             <string>TolkPowerOn();
 TolkDebugSet(1);
-TolkTrySAPI(1);
+TolkTrySAPI(0);
 TolkPreferSAPI(0);
+TolkFallbackSet(1);
 TolkGetScreenReader();
 TolkHasSpeech();
 TolkHasBraille();
 TolkIsSpeaking();
-TolkSpeak("Speech test suite running.");
-TolkBraille("Braille test suite running.");
-TolkOutput("Test suite complete. Type in the window and press enter to hear output. Hold shift and press enter for new lines.");
+
+iteration = 0;
+alarm[0] = 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>show_debug_message(iteration);
+if (iteration &lt; 3)
+{
+    alarm[0] = 1;
+    //TolkSilence();
+    if (TolkIsSpeaking())
+    {
+        
+        exit;
+    }
+
+}
+switch (iteration)
+{
+
+    case 0:
+        TolkSpeak("Speech test suite running.");
+    break;
+    case 1:
+        TolkBraille("Braille test suite running.");
+    break;
+    case 2:
+        TolkOutput("Test suite complete. Type in the window and press enter to hear output. Hold shift and press enter for new lines.");
+    break;
+    default:
+        iteration = 9;
+    break;
+}
+
+iteration++;
+
+
 </string>
           </argument>
         </arguments>
