@@ -180,7 +180,11 @@ copy "%25cd%25\GMSTolkTalk_x86.dll" "%25cd%25\..\..\..\..\..\extensions\gmstolkt
 copy "%25cd%25\x86\nvdaControllerClient32.dll" "%25cd%25\..\..\..\..\..\datafiles\x86\nvdaControllerClient32.dll"
 copy "%25cd%25\x86\SAAPI32.dll" "%25cd%25\..\..\..\..\..\datafiles\x86\SAAPI32.dll"
 copy "%25cd%25\x86\Tolk.dll" "%25cd%25\..\..\..\..\..\datafiles\x86\Tolk.dll"
-
+mkdir %25cd%25\..\..\..\..\..\GMS1TolkTalk.gmx\datafiles\x86
+copy "%25cd%25\GMSTolkTalk_x86.dll" "%25cd%25\..\..\..\..\..\GMS1TolkTalk.gmx\extensions\GMS1TolkTalk"
+copy "%25cd%25\x86\nvdaControllerClient32.dll" "%25cd%25\..\..\..\..\..\GMS1TolkTalk.gmx\datafiles\x86\nvdaControllerClient32.dll"
+copy "%25cd%25\x86\SAAPI32.dll" "%25cd%25\..\..\..\..\..\GMS1TolkTalk.gmx\datafiles\x86\SAAPI32.dll"
+copy "%25cd%25\x86\Tolk.dll" "%25cd%25\..\..\..\..\..\GMS1TolkTalk.gmx\datafiles\x86\Tolk.dll"
 ) else (
 echo $(PlatformName)
 echo 64-bit
