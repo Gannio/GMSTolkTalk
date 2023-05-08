@@ -8,16 +8,16 @@ Client libraries and headers are distributed under their own license (Namely, NV
 
 ## Supported screen readers
 
-In addition to the screen readers supported by Tolk. GMSTolkTalk adds an additional fallback "driver" in the form of the Synthesis.Speech protocol. This should make it fully compatible with Windows devices that do not have other screen readers installed, or where the Microsoft Speech API (SAPI) is disabled. Note that Braille support is currently untested on all screen readers as well as the fallback driver, as I don't have a Braille device to test.
+In addition to the screen readers supported by Tolk, GMSTolkTalk adds an additional fallback "driver" in the form of the Synthesis.Speech protocol. This should make it fully compatible with Windows devices that do not have other screen readers installed, or where the Microsoft Speech API (SAPI) is disabled. Note that Braille support is currently untested on all screen readers as well as the fallback driver, as I don't have a Braille device to test.
 
 ## Functions
 The following functions are available in GMS. Functions marked with an asterisk (\*) only work with certain screen readers. Variables with turnOn can accept doubles or booleans in GMS.
 
 ### TolkPowerOn()
-Required before most other methods. Load's Tolk's core. If not done, many functions below will return -1 or "NOT LOADED", depending on the return type.
+Required before most other methods. Load's Tolk's core. If not done, many functions below will return -1 or "NOT LOADED", depending on the return type. Returns 1 if successful, and 0 if it (somehow) fails.
 
 ### TolkPowerOff()
-Unload's Tolk's core. Outside of the game_end function, this should only be necessary if you want to save on memory in a situation that otherwise does not require screen readers.
+Unload's Tolk's core. Outside of the game_end function, this should only be necessary if you want to save on memory in a situation that otherwise does not require screen readers. Returns 1 if successful, and 0 if it (somehow) fails.
 
 ### TolkFallbackSet(turnOn)
 Use to enable/disable the fallback Speech.Synthesis support.
@@ -41,6 +41,9 @@ Returns whether the current driver has speech capability. Returns 1 if true, exc
 ### TolkHasBraille()
 Returns whether the current driver has braille capability. Returns 1 if true, except for the fallback driver, which will return 2. Note that braille support for the fallback driver is untested, and if it works likely outputs to both devices.
 
+### TolkIsSpeaking()*
+Returns whether or not the current driver is speaking or not. Note that this is only supported for SAPI, ZoomText, and the fallback driver. According to Tolk's source, other drivers only seem to have stubs that will return false.
+
 ### TolkSpeak(input)
 ### TolkBraille(input)
 ### TolkOutput(input)
@@ -50,3 +53,6 @@ Passes the string parameter to the appropriate driver to speak, pass to braille 
 
 ### TolkSilence()
 Stops all speach output from the appropriate driver.
+
+### TolkTest(input)
+A preliminary, early test for basic speech output. Not recommend for actual use.

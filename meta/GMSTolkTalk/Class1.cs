@@ -154,10 +154,16 @@ namespace GMSTolkTalk
         public static unsafe double TolkHasSpeech()
         {
             DebugPrint("TolkHasSpeech called");
+            
             if (!Tolk.IsLoaded())
             {
                 DebugPrint(notLoadedText);
                 return -1;
+            }
+            if (SpeechSynthFallback && GetScreenReader() == "fallback")
+            {
+                DebugPrint("The fallback driver supports speech.");
+                return 2;
             }
             if (Tolk.HasSpeech())
             {
@@ -166,6 +172,7 @@ namespace GMSTolkTalk
             }
             else
             {
+                
                 DebugPrint("This screen reader driver does not support speech.");
                 return 0;
             }
@@ -181,6 +188,12 @@ namespace GMSTolkTalk
             {
                 DebugPrint(notLoadedText);
                 return -1;
+            }
+
+            if (SpeechSynthFallback && GetScreenReader() == "fallback")
+            {
+                DebugPrint("It is unknown if the fallback driver supports Braille. If it does it has to do so through speech, so both will play.");
+                return 2;
             }
             if (Tolk.HasBraille())
             {
