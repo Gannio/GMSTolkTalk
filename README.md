@@ -14,7 +14,7 @@ In addition to the screen readers supported by Tolk, GMSTolkTalk adds an additio
 The following functions are available in GMS. Functions marked with an asterisk (\*) only work with certain screen readers. Variables with turnOn can accept doubles or booleans in GMS.
 
 ### TolkPowerOn()
-Required before most other methods. Load's Tolk's core. If not done, many functions below will return -1 or "NOT LOADED", depending on the return type. Returns 1 if successful, and 0 if it (somehow) fails.
+Required before most other methods. Load's Tolk's core. If not done, many functions below will return -1 or "NOT LOADED", depending on the return type. Returns 1 if successful, and 0 if it (somehow) fails. Note that it may take about 3 seconds for Tolk to fully load, during this time any call to speech may result in some lag until it is fully loaded.
 
 ### TolkPowerOff()
 Unload's Tolk's core. Outside of the game_end function, this should only be necessary if you want to save on memory in a situation that otherwise does not require screen readers. Returns 1 if successful, and 0 if it (somehow) fails.
@@ -56,3 +56,9 @@ Stops all speach output from the appropriate driver.
 
 ### TolkTest(input)
 A preliminary, early test for basic speech output. Not recommend for actual use.
+
+## Contributors
+
+* [Gannio](https://github.com/Gannio)
+* [Davy Kager](https://github.com/dkager), Leonard de Ruijter, Axel Vugts, QuentinC (Made the original Tolk core used in this project).
+* [mijyuoon](https://github.com/mijyuoon) (Fixed some bugs with returning strings)

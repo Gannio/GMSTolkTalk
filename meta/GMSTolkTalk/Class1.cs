@@ -406,29 +406,22 @@ namespace GMSTolkTalk
             }
             return 1;
         }
+        private const int _maxstrsize = 1024; // 1KB is more than enough for this project since we only need a 12-character or so name. For projects that require bigger sizes, we should run a check for size.
+        private static readonly IntPtr _strbuffer = Marshal.AllocHGlobal(_maxstrsize);
 
         private static unsafe byte* ToGMSString(string normalString)
         {
-            //Small note here since it probably will get someone worried: Unsafe is not necessairly dangerous. It's that it makes things more like C++ where you have to manage your data to avoid memory leaks/errors.
-            //In our case, we are simply using it to properly return a string to GMS, as C# can't support pointers otherwise. Strings are passed through this function for that reason.
-            //The 'fixed' statement below basically brings us *back* to a managed statement before the return value is sent.
-            fixed (byte* unmanagedOutput = new byte[normalString.Length])//(byte*)&output)
-            {
-                for (var i = 0; i < normalString.Length; i++)
-                {
-                    unmanagedOutput[i] = (byte)normalString[i];
-                }
-                /*unmanagedOutput[output.Length] = 0x00;//Set the null terminator.
-                unmanagedOutput[output.Length+1] = 0x00;//Set the null terminator.
-                unmanagedOutput[output.Length + 2 ] = 0x00;//Set the null terminator.
-                unmanagedOutput[output.Length + 3] = 0x00;//Set the null terminator.
-                unmanagedOutput[output.Length + 4] = 0x00;//Set the null terminator.
-                unmanagedOutput[output.Length + 5] = 0x00;//Set the null terminator.
-                unmanagedOutput[output.Length + 6] = 0x00;//Set the null terminator.
-                unmanagedOutput[output.Length + 7] = 0x00;//Set the null terminator.*/
-                return unmanagedOutput;
-            }
+            var strBytes = Encoding.ASCII.GetBytes(normalString);
+            var maxLength = Math.Min(_maxstrsize - 1, strBytes.Length); // maxlen-1 to keep space for null terminator
+
+            Marshal.Copy(strBytes, 0, _strbuffer, maxLength);
+
+            var strPtr = (byte*)_strbuffer;
+            strPtr[maxLength] = (byte)0; // don't forger the darn null terminator!
+
+            return strPtr;
         }
+        
 
         [DllExport("TolkTest", CallingConvention.Cdecl)]
         public static unsafe double TolkTest(char* inputInfo)
