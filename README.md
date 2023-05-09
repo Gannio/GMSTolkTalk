@@ -61,4 +61,4 @@ A preliminary, early test for basic speech output. Not recommend for actual use.
 
 * [Gannio](https://github.com/Gannio)
 * [Davy Kager](https://github.com/dkager), Leonard de Ruijter, Axel Vugts, QuentinC (Made the original Tolk core used in this project).
-* [mijyuoon](https://github.com/mijyuoon) (Fixed some bugs with returning strings)
+* [mijyuoon](https://github.com/mijyuoon), [Nnubes256](https://github.com/Nnubes256) (Fixed/explained some bugs with returning strings)
