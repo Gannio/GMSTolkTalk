@@ -1,5 +1,5 @@
 # GMSTolkTalk
-GMSTolkTalk DLL Library for Game Maker Studio that adds support for Speech/Braille interface. It uses [Tolk](https://github.com/ndarilek/tolk) as core for interfacing with a variety of screen readers, as well as implements Speech.Synthesis.
+GMSTolkTalk is a DLL Library for Game Maker Studio that adds support for Speech/Braille interface. It uses [Tolk](https://github.com/ndarilek/tolk) as its core for interfacing with a variety of screen readers, as well as implements Speech.Synthesis.
 
 ## License
 
