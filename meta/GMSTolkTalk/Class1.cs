@@ -11,7 +11,7 @@ using System.Speech.Synthesis;
 
 namespace GMSTolkTalk
 {
-    public class Class1
+    public class GMSTolkTalk
     {
         static bool debugEnabled = false;
         static bool SpeechSynthFallback = true;

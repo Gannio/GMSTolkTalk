@@ -1,5 +1,5 @@
 TolkDebugSet(1);
-TolkTrySAPI(1);
+TolkTrySAPI(0);
 TolkPreferSAPI(0);
 TolkFallbackSet(1);
 TolkPowerOn();
