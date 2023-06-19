@@ -2,7 +2,7 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
 /*
-The following is an example of an override script for draw_text, 
+The following is a basic example of an override script for draw_text, 
 to make all instances play text when a mouse is hovered over them.
 It works by trying to create a bounding box for the text, based on the width and height, 
 and outputting speech if the text is different from the global variable.
@@ -11,7 +11,9 @@ and outputting speech if the text is different from the global variable.
 
 global.TolkSpeech_LastSpoken = "";
 #macro draw_text_original draw_text
+//A way to access draw_text while avoiding the override.
 #macro draw_text draw_text_speech
+//Redirects draw_text's normal call to the function below.
 
 
 
@@ -27,9 +29,7 @@ function draw_text_speech(x,y,displayString, onClick = false, spok = displayStri
 		draw_rectangle(box[0],box[1],box[2],box[3],c_blue);
 		if (spok != global.TolkSpeech_LastSpoken)
 		{
-			//show_debug_message(x);
-			//show_debug_message(y);
-			//show_debug_message(spok);
+			//If mouse is inside the rectangle, and the current string does not match the last spoken string, output text on both speech and braille.
 			global.TolkSpeech_LastSpoken = spok;
 			TolkSilence();
 			TolkOutput(spok);
@@ -41,15 +41,12 @@ function draw_text_speech(x,y,displayString, onClick = false, spok = displayStri
 }
 function getTextBoundingBox(textString, halign, valign)
 {
+	/*
+	A means of getting the bounding box for general text ran by draw_text. Note that this will base things off the current font loaded, so you may need to adjust your code if you use multiple fonts.
+	*/
 	var bbL,bbT, bbR, bbB;
 	var width = string_width(textString);
 	var height = string_height(textString);
-	
-	
-	
-	
-	
-	
 	switch (halign)
 	{
 		case fa_left:

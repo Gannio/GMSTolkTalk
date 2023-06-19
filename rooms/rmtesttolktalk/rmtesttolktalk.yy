@@ -24,9 +24,9 @@
   "creationCodeFile": "",
   "inheritCode": false,
   "instanceCreationOrder": [
-    {"name":"inst_53B8273F","path":"rooms/Room1/Room1.yy",},
-    {"name":"inst_494C7E6F","path":"rooms/Room1/Room1.yy",},
-    {"name":"inst_5C4A7463","path":"rooms/Room1/Room1.yy",},
+    {"name":"inst_53B8273F","path":"rooms/rmTestTolkTalk/rmTestTolkTalk.yy",},
+    {"name":"inst_494C7E6F","path":"rooms/rmTestTolkTalk/rmTestTolkTalk.yy",},
+    {"name":"inst_5C4A7463","path":"rooms/rmTestTolkTalk/rmTestTolkTalk.yy",},
   ],
   "inheritCreationOrder": false,
   "sequenceId": null,
@@ -54,7 +54,7 @@
     "path": "folders/Rooms.yy",
   },
   "resourceVersion": "1.0",
-  "name": "Room1",
+  "name": "rmTestTolkTalk",
   "tags": [],
   "resourceType": "GMRoom",
 }

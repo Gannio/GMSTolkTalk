@@ -16,7 +16,7 @@
   "androidProps": false,
   "installdir": "",
   "files": [
-    {"filename":"GMSTolkTalk.dll","origname":"","init":"","final":"","kind":1,"uncompress":false,"functions":[],"constants":[],"ProxyFiles":[],"copyToTargets":-1,"order":[],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
+    {"filename":"GMSTolkTalk.dll","origname":"","init":"","final":"","kind":1,"uncompress":false,"functions":[],"constants":[],"ProxyFiles":[],"copyToTargets":3035461389054378222,"order":[],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
     {"filename":"GMSTolkTalk.ext","origname":"","init":"","final":"","kind":4,"uncompress":false,"functions":[
         {"externalName":"TolkTest","kind":4,"help":"","hidden":false,"returnType":2,"argCount":0,"args":[
             1,

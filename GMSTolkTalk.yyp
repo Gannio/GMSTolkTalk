@@ -5,7 +5,7 @@
     {"id":{"name":"GMSTolkTalkScripts","path":"scripts/GMSTolkTalkScripts/GMSTolkTalkScripts.yy",},"order":0,},
     {"id":{"name":"GMSTolkTalk","path":"extensions/GMSTolkTalk/GMSTolkTalk.yy",},"order":0,},
     {"id":{"name":"objTestSpeech","path":"objects/objTestSpeech/objTestSpeech.yy",},"order":1,},
-    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
+    {"id":{"name":"rmTestTolkTalk","path":"rooms/rmTestTolkTalk/rmTestTolkTalk.yy",},"order":0,},
   ],
   "Options": [
     {"name":"Android","path":"options/android/options_android.yy",},
@@ -25,7 +25,7 @@
     "children": [],
   },
   "RoomOrderNodes": [
-    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"roomId":{"name":"rmTestTolkTalk","path":"rooms/rmTestTolkTalk/rmTestTolkTalk.yy",},},
   ],
   "Folders": [
     {"folderPath":"folders/Sprites.yy","order":0,"resourceVersion":"1.0","name":"Sprites","tags":[],"resourceType":"GMFolder",},
